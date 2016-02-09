@@ -78,7 +78,9 @@ public class LibraryFacade {
     }
 
     public void delete(Book b) {
-        br.remove(br.findBy(b.getId()));
+        // Simple remove won't work as the entity may be coming form UI layer
+        // that uses detached entities
+        br.attachAndRemove(b);
     }
 
     public void save(Book value) {
@@ -103,6 +105,6 @@ public class LibraryFacade {
     }
 
     public void delete(Category e) {
-        cr.remove(cr.findBy(e.getId()));
+        cr.attachAndRemove(e);
     }
 }
